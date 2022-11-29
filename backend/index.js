@@ -1,12 +1,13 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mysql, { createConnection, createPool } from 'mysql';
+import cors from 'cors';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
-
+app.use(cors());
 const db = createConnection({
   host: process.env.MYSQL_HOST,
   user: process.env.MYSQL_USER,
