@@ -1,10 +1,9 @@
-import './App.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import Add from './pages/Add';
 import Books from './pages/Books';
 import Update from './pages/Update';
-
+import './style.css';
 function App() {
   const router = createBrowserRouter([
     {
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <div className='App'>
-      <h1>React with MySql</h1>
       <RouterProvider router={router} />
     </div>
   );

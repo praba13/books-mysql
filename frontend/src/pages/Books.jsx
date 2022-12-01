@@ -1,21 +1,30 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 const Books = () => {
 
-    const [books, setBooks] = useState([])
+    const [books, setBooks] = useState([]);
     useEffect(() => {
         const fetchAllBooks = async () => {
             try {
-                const res = await axios.get("http://localhost:8800/books")
+                const res = await axios.get("http://localhost:8800/books");
                 //console.log(res)
-                setBooks(res.data)
+                setBooks(res.data);
             } catch (err) {
-                console.log(err)
+                console.log(err);
             }
+        };
+        fetchAllBooks();
+    }, []);
+
+    const handleDelete = async (id) => {
+        try {
+            await axios.delete(`http://localhost:8800/books/${id}`);
+            window.location.reload(); // reloads the current URL, like the Refresh butto
+        } catch (err) {
+            console.log(err);
         }
-        fetchAllBooks()
-    }, [])
+    };
 
     return (
         <div>
@@ -26,13 +35,15 @@ const Books = () => {
                         {book.cover && <img src={book.cover} alt="No PIC" />}
                         <h2>{book.title}</h2>
                         <p>{book.desc}</p>
-                        <span>{book.price}</span>
+                        <span>${book.price}</span>
+                        <button className="delete" onClick={() => handleDelete(book.id)}>Delete</button>
+                        <button className="update"><Link to={`/update/${book.id}`} style={{ color: "inherit", textDecoration: "none" }}>Update</Link></button>
                     </div>
                 ))}
             </div>
-            <button><Link to="/add"> Add New Book</Link> </button>
-        </div>
-    )
-}
+            <button className='addHome' ><Link to="/add" style={{ color: "inherit", textDecoration: "none" }} > Add New Book</Link> </button>
+        </div >
+    );
+};
 
-export default Books
+export default Books;
